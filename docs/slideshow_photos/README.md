@@ -1,1 +1,0 @@
-# Stadtmission-Windhoek
