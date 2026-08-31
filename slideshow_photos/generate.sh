@@ -1,5 +1,5 @@
 #!/bin/bash
-cat << 'HTML' > ../slideshow.html
+cat << 'HTML' > ../index.html
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,10 +34,10 @@ for dir in */; do
   
   # Generate Decade Division Title Slide
   if [ $first -eq 1 ]; then
-    echo "  <div class=\"slide decade-slide active\"><div class=\"decade-title\">$decade_name</div><div class=\"decade-subtitle\">50 Jahre Stadtmission Windhoek</div></div>" >> ../slideshow.html
+    echo "  <div class=\"slide decade-slide active\"><div class=\"decade-title\">$decade_name</div><div class=\"decade-subtitle\">50 Jahre Stadtmission Windhoek</div></div>" >> ../index.html
     first=0
   else
-    echo "  <div class=\"slide decade-slide\"><div class=\"decade-title\">$decade_name</div><div class=\"decade-subtitle\">50 Jahre Stadtmission Windhoek</div></div>" >> ../slideshow.html
+    echo "  <div class=\"slide decade-slide\"><div class=\"decade-title\">$decade_name</div><div class=\"decade-subtitle\">50 Jahre Stadtmission Windhoek</div></div>" >> ../index.html
   fi
 
   # Loop through photos inside the decade folder
@@ -51,12 +51,12 @@ for dir in */; do
     # Replace underscores with spaces for the caption
     caption=$(echo "$filename" | tr '_' ' ')
     
-    # Prefix image source with slideshow_photos/ for correct path resolution relative to slideshow.html
-    echo "  <div class=\"slide\"><img src=\"slideshow_photos/$img\"><div class=\"caption\">$caption</div></div>" >> ../slideshow.html
+    # Prefix image source with slideshow_photos/ for correct path resolution relative to index.html
+    echo "  <div class=\"slide\"><img src=\"slideshow_photos/$img\"><div class=\"caption\">$caption</div></div>" >> ../index.html
   done
 done
 
-cat << 'HTML' >> ../slideshow.html
+cat << 'HTML' >> ../index.html
 <script>
   let slides = document.querySelectorAll('.slide');
   let current = 0;
@@ -70,4 +70,4 @@ cat << 'HTML' >> ../slideshow.html
 </html>
 HTML
 
-echo "../slideshow.html created successfully!"
+echo "../index.html created successfully!"
