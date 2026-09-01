@@ -1,3 +1,4 @@
+cat << 'EOF' > generate.sh
 #!/bin/bash
 cat << 'HTML' > ../index.html
 <!DOCTYPE html>
@@ -124,3 +125,5 @@ cat << 'HTML' >> ../index.html
 HTML
 
 echo "Successfully generated index.html in parent folder!"
+EOF
+chmod +x generate.sh && ./generate.sh
