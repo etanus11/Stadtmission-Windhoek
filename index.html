@@ -75,10 +75,120 @@
     font-size: 3rem; 
     color: #222; 
   }
+
+  /* Navigation Arrow Buttons */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+    user-select: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .nav-btn:hover {
+    background: rgba(212, 175, 55, 0.9);
+    color: #111;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .nav-btn.prev { left: 25px; }
+  .nav-btn.next { right: 25px; }
+
+  /* Music Button Styling */
+  .music-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 100;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .music-btn:hover {
+    background: #d4af37;
+    color: #111;
+  }
+
+  /* Decade Shortcut Container (Hover area in top-left) */
+  .decade-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px 20px 20px 20px;
+    z-index: 110;
+  }
+
+  /* Hidden by default with smooth fade-in */
+  .decade-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  /* Shows when hovering top-left area OR when active via keyboard key 'D' */
+  .decade-container:hover .decade-nav,
+  .decade-nav.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .decade-tab {
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+  }
+
+  .decade-tab:hover {
+    background: #d4af37;
+    color: #111;
+    transform: scale(1.05);
+  }
 </style>
 </head>
 <body>
-  <div class="slide decade-slide active"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1976-1980</div></div>
+
+<!-- Decade Hover Container -->
+<div class="decade-container">
+  <div class="decade-nav" id="decadeNav"></div>
+</div>
+
+<!-- Background Audio Player -->
+<audio id="bg-music" loop>
+  <source src="background.mp3" type="audio/mpeg">
+</audio>
+<button class="music-btn" id="musicBtn" title="Musik abspielen/pausieren">🎵 Musik: Aus</button>
+
+<!-- On-screen Navigation Arrows -->
+<button class="nav-btn prev" id="prevBtn" title="Previous Slide">&#10094;</button>
+<button class="nav-btn next" id="nextBtn" title="Next Slide">&#10095;</button>
+
+  <div class="slide decade-slide active" data-decade="1976-1980"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1976-1980</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/01_Stami_Wdh_Bi-str_54.jpg"><div class="caption">Schild am Eingang zum Haus</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/02_Stami_Wdh_Bimarckstr54.jpg"><div class="caption">Schaukasten am Eingang</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/03_Fam_Hechler_im_Garten.jpg"><div class="caption">Familie Hechler im Garten 1984: Kinder Marc, Andreas und Miriam</div></div>
@@ -89,7 +199,7 @@
   <div class="slide"><img src="slideshow-photos/1976-1980/13_Stamihof_Braai.jpg"><div class="caption">Braai im Stadtmissionsgarten</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/05_Garten_Kinderschar_1977.png"><div class="caption">Stadtmissionsgarten Kinderschar 1977 – mit Beate Hill. Vorne rechts sitzt Rudi Rüffler. Hinten rechts stehen auch Daudi und Klaus-Peter Koch</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/12_Stamibraai.png"><div class="caption">Braai im Stadtmissionsgarten</div></div>
-  <div class="slide decade-slide"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1981-1990</div></div>
+  <div class="slide decade-slide" data-decade="1981-1990"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1981-1990</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/06_Bibelstunde_1983.jpg"><div class="caption">Bibelstunden im 24 qm grossen Zimmer im alten Stadtmissionshaus:  in dem auch die offenen Abende und ab 1981 die Gottesdienste gelaufen sind. Dann wurde die Schiebetüren geöffnet und das Wohnzimmer mitbenutzt.</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/07_Bibelstunde.jpg"><div class="caption">Bibelstunden im 24 qm grossen Zimmer im alten Stadtmissionshaus:  in dem auch die offenen Abende und ab 1981/82 die Gottesdienste gelaufen sind. Dann wurde die Schiebetüren geöffnet und das Wohnzimmer mitbenutzt</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/08_Bibelstunde.jpg"><div class="caption">Bibelstunden im 24 qm grossen Zimmer im alten Stadtmissionshaus: in dem auch die offenen Abende und ab 1981/82 die Gottesdienste gelaufen sind. Dann wurden die Schiebetüren geöffnet und das Wohnzimmer mitbenutzt</div></div>
@@ -121,19 +231,19 @@
   <div class="slide"><img src="slideshow-photos/1981-1990/39_Horst_Monika_Pietzsch.jpg"><div class="caption">Horst u Monika Pietzsch: Monika geb. Bienk war zuerst Gemeindehelferin (1979 bis 82) und heiratete dann Co-Missionar/Prediger Horst Pietzsch (1982-1985 in Windhoek).</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/hochzeit_horst_und_monika_pietsch.jpg"><div class="caption">Hochzeit Horst und Monika Pietzsch</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/kinderchor_pietsch_hochzeit_12.3.1983.jpg"><div class="caption">Kinderchor zur Hochzeit von Horst und Monika Pietsch.  Erika Redecker dirigiert den Chor</div></div>
-  <div class="slide decade-slide"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1991-2000</div></div>
+  <div class="slide decade-slide" data-decade="1991-2000"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1991-2000</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/chor.jpg"><div class="caption">Chor der Stadtmission: Ina Thomass, Lindi Kirsten, Karin Seiler, Roswitha Hosthemke, Birgit von Ludwiger, Helmuth Weinert, Heiko von Ludwiger, Helmut Basson</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/Elke_Mannschatz_GertBotha_Hochzeit.jpg"><div class="caption">Hochzeit Gert Botha und Elke Mannschatz. 2000</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/familie_trauernicht.jpg"><div class="caption">Familie Trauernicht</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/frauenstunde_stadtmission_1997-98.jpg"><div class="caption">Frauenstunde Stadtmission 1997-98</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/Horsthemke4OllisKonfi.jpg"><div class="caption">Konfirmation 1989 mit Horst Pietzsch in der alten Stadtmission</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/konfirmation_werner_olli.jpg"><div class="caption">Konfirmation 1989 mit Horst Pietzsch: Oliver Horsthemke, Werner Morgenstern</div></div>
-  <div class="slide decade-slide"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2001-2010</div></div>
+  <div class="slide decade-slide" data-decade="2001-2010"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2001-2010</div></div>
   <div class="slide"><img src="slideshow-photos/2001-2010/familie_klimke.jpg"><div class="caption">Famiie Herbert Klimke: Anita und die 2 Kinder</div></div>
   <div class="slide"><img src="slideshow-photos/2001-2010/jugend_gespraech.jpg"><div class="caption">Gespräch mit der Jugend</div></div>
   <div class="slide"><img src="slideshow-photos/2001-2010/jungscharlager.jpg"><div class="caption">Jungscharlager</div></div>
   <div class="slide"><img src="slideshow-photos/2001-2010/konfirmation_mit_johannes_und_siegfried_eherler_1_11_2002.jpg"><div class="caption">Konfirmation mit Johannes und Siegfried Eherler. 1.11.1998</div></div>
-  <div class="slide decade-slide"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2011-2020</div></div>
+  <div class="slide decade-slide" data-decade="2011-2020"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2011-2020</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/40_jahre_stami_hannes_und_hanni.jpg"><div class="caption">40 Jahre Stami - Hannes und Hanni</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/40-JahrFeierChorpdf.jpg"><div class="caption">Chor zur 40-Jahre-Feier der Stadtmission</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/einzug_markus_oblander_2016.jpg"><div class="caption">Einzug Markus Obländer 2016</div></div>
@@ -142,11 +252,113 @@
   <div class="slide"><img src="slideshow-photos/2011-2020/rudi_penzhorn_mai_2018.jpg"><div class="caption">Rudi Penzhorn Mai 2018</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/rudi_penzhorn_ordinierung_mit_wieland_muller_februar_2017.jpg"><div class="caption">Rudi Penzhorn Ordinierung mit Wieland Müller Februar 2017</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/schon_geschmuckter_saal_2016.jpg"><div class="caption">Schön geschmückter Saal 2016</div></div>
-  <div class="slide decade-slide"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2021-2026</div></div>
+  <div class="slide decade-slide" data-decade="2021-2026"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2021-2026</div></div>
   <div class="slide"><img src="slideshow-photos/2021-2026/bernhardt.jpg"><div class="caption">Andreas und Claudia Bernhardt: Stadtmissionsehepaar 2020-2022</div></div>
   <div class="slide"><img src="slideshow-photos/2021-2026/Einschulungsgottesdienst 14 Jan 2024.jpg"><div class="caption">Einschulungsgottesdienst 14. Jan 2024</div></div>
   <div class="slide"><img src="slideshow-photos/2021-2026/musikteam_zirzow.jpg"><div class="caption">Musikteam: Heide Zirzo und ??</div></div>
   <div class="slide"><img src="slideshow-photos/2021-2026/osterfruehstueck.jpg"><div class="caption">Osterfrühstück 2025</div></div>
+  <div class="slide decade-slide" data-decade="debora"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">debora</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image100.jpg"><div class="caption">image100</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image101.jpg"><div class="caption">image101</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image102.jpg"><div class="caption">image102</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image105.jpg"><div class="caption">image105</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image106.jpg"><div class="caption">image106</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image107.jpg"><div class="caption">image107</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image108.jpg"><div class="caption">image108</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image109.jpg"><div class="caption">image109</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image110.jpg"><div class="caption">image110</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image111.jpg"><div class="caption">image111</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image112.jpg"><div class="caption">image112</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image113.jpg"><div class="caption">image113</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image114.jpg"><div class="caption">image114</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image115.jpg"><div class="caption">image115</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image116.jpg"><div class="caption">image116</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image117.jpg"><div class="caption">image117</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image118.jpg"><div class="caption">image118</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image119.jpg"><div class="caption">image119</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image11.jpg"><div class="caption">image11</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image120.jpg"><div class="caption">image120</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image121.jpg"><div class="caption">image121</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image122.jpg"><div class="caption">image122</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image123.jpg"><div class="caption">image123</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image124.jpg"><div class="caption">image124</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image125.jpg"><div class="caption">image125</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image130.jpg"><div class="caption">image130</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image13.jpg"><div class="caption">image13</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image15.jpg"><div class="caption">image15</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image16.jpg"><div class="caption">image16</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image17.jpg"><div class="caption">image17</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image18.jpg"><div class="caption">image18</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image19.jpg"><div class="caption">image19</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image20.jpg"><div class="caption">image20</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image21.jpg"><div class="caption">image21</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image22.jpg"><div class="caption">image22</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image23.jpg"><div class="caption">image23</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image24.jpg"><div class="caption">image24</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image26.jpg"><div class="caption">image26</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image27.jpg"><div class="caption">image27</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image28.jpg"><div class="caption">image28</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image29.jpg"><div class="caption">image29</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image2.jpg"><div class="caption">image2</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image30.jpg"><div class="caption">image30</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image31.jpg"><div class="caption">image31</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image32.jpg"><div class="caption">image32</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image33.jpg"><div class="caption">image33</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image34.jpg"><div class="caption">image34</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image36.jpg"><div class="caption">image36</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image37.jpg"><div class="caption">image37</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image38.jpg"><div class="caption">image38</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image39.jpg"><div class="caption">image39</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image44.jpg"><div class="caption">image44</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image45.jpg"><div class="caption">image45</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image46.jpg"><div class="caption">image46</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image47.jpg"><div class="caption">image47</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image48.jpg"><div class="caption">image48</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image49.jpg"><div class="caption">image49</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image50.jpg"><div class="caption">image50</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image53.jpg"><div class="caption">image53</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image54.jpg"><div class="caption">image54</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image55.jpg"><div class="caption">image55</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image56.jpg"><div class="caption">image56</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image57.jpg"><div class="caption">image57</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image70.jpg"><div class="caption">image70</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image71.jpg"><div class="caption">image71</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image78.jpg"><div class="caption">image78</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image79.jpg"><div class="caption">image79</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image80.jpg"><div class="caption">image80</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image81.jpg"><div class="caption">image81</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image82.jpg"><div class="caption">image82</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image83.jpg"><div class="caption">image83</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image86.jpg"><div class="caption">image86</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image87.jpg"><div class="caption">image87</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image88.jpg"><div class="caption">image88</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image94.jpg"><div class="caption">image94</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image97.jpg"><div class="caption">image97</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image98.jpg"><div class="caption">image98</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image99.jpg"><div class="caption">image99</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image103.png"><div class="caption">image103</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image104.png"><div class="caption">image104</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image10.png"><div class="caption">image10</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image129.png"><div class="caption">image129</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image14.png"><div class="caption">image14</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image25.png"><div class="caption">image25</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image35.png"><div class="caption">image35</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image3.png"><div class="caption">image3</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image4.png"><div class="caption">image4</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image5.png"><div class="caption">image5</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image64.png"><div class="caption">image64</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image65.png"><div class="caption">image65</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image6.png"><div class="caption">image6</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image72.png"><div class="caption">image72</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image73.png"><div class="caption">image73</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image74.png"><div class="caption">image74</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image75.png"><div class="caption">image75</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image76.png"><div class="caption">image76</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image77.png"><div class="caption">image77</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image7.png"><div class="caption">image7</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image8.png"><div class="caption">image8</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image91.png"><div class="caption">image91</div></div>
+  <div class="slide"><img src="slideshow-photos/debora/image9.png"><div class="caption">image9</div></div>
 <script>
   const slides = Array.from(document.querySelectorAll('.slide'));
   let current = 0;
@@ -184,8 +396,51 @@
     timer = setInterval(nextSlide, 8000);
   }
 
+  // Generate Decade Shortcut Navigation Bar Buttons dynamically
+  const decadeNav = document.getElementById('decadeNav');
+  decadeSlides().forEach(item => {
+    const decadeName = item.slide.getAttribute('data-decade');
+    if (decadeName) {
+      const btn = document.createElement('button');
+      btn.className = 'decade-tab';
+      btn.textContent = decadeName;
+      btn.addEventListener('click', function() {
+        showSlide(item.index);
+        restartTimer();
+      });
+      decadeNav.appendChild(btn);
+    }
+  });
+
+  // Audio Toggle Logic
+  const audio = document.getElementById('bg-music');
+  const musicBtn = document.getElementById('musicBtn');
+
+  musicBtn.addEventListener('click', function() {
+    if (audio.paused) {
+      audio.play();
+      musicBtn.textContent = '🎵 Musik: An';
+    } else {
+      audio.pause();
+      musicBtn.textContent = '🎵 Musik: Aus';
+    }
+  });
+
+  // On-screen Button Event Listeners
+  document.getElementById('prevBtn').addEventListener('click', function() {
+    previousSlide();
+    restartTimer();
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', function() {
+    nextSlide();
+    restartTimer();
+  });
+
+  // Keyboard Controls: 
   // Left / Right = individual slides
-  // Ctrl + Left / Right = previous / next decade
+  // Ctrl + Left / Right = decade jump
+  // 'D' = toggle decade bar visibility
   document.addEventListener('keydown', function(event) {
     if (event.key === 'ArrowRight') {
       event.preventDefault();
@@ -196,6 +451,9 @@
       event.preventDefault();
       event.ctrlKey ? previousDecade() : previousSlide();
       restartTimer();
+    }
+    if (event.key === 'd' || event.key === 'D') {
+      decadeNav.classList.toggle('visible');
     }
   });
 
