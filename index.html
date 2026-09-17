@@ -64,16 +64,31 @@
   }
   .decade-title { 
     font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 4rem; 
+    font-size: 3.5rem; 
     color: #111; 
     font-weight: bold; 
     letter-spacing: 3px; 
-    margin-bottom: 20px; 
+    margin-bottom: 10px; 
   }
   .decade-years { 
     font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 3rem; 
+    font-size: 2.5rem; 
     color: #222; 
+  }
+
+  /* First Slide Specific Media Styling */
+  .title-logo {
+    max-height: 120px;
+    width: auto;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-bottom: 15px;
+  }
+  .title-hero-img {
+    max-height: 45vh;
+    width: auto;
+    margin-top: 15px;
   }
 
   /* Navigation Arrow Buttons */
@@ -188,7 +203,7 @@
 <button class="nav-btn prev" id="prevBtn" title="Previous Slide">&#10094;</button>
 <button class="nav-btn next" id="nextBtn" title="Next Slide">&#10095;</button>
 
-  <div class="slide decade-slide active" data-decade="1976-1980"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1976-1980</div></div>
+  <div class="slide decade-slide active" data-decade="1976-1980"><img src="logo.png" class="title-logo" alt="Logo"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1976-1980</div><img src="title-photo.jpg" class="title-hero-img" alt="Titelbild"></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/02_Stami_Wdh_Bimarckstr54.jpg"><div class="caption">Schaukasten am Eingang, Bismarckstrasse 54</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/03_Fam_Hechler_im_Garten.jpg"><div class="caption">Familie Hechler im Garten 1984: Kinder Marc, Andreas und Miriam</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/04_Stami-Programm.jpg"><div class="caption">Stami-Programm zu einer Zeit wo man Plakate noch von Hand oder mit der Schreibmaschine geschrieben hat</div></div>
@@ -233,6 +248,7 @@
   <div class="slide"><img src="slideshow-photos/1981-1990/08_Bibelstunde.png"><div class="caption">Bibelstunde in der alten Stadtmission. 1983</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/14_Gemeindeausflug_Farm Hoffnung.png"><div class="caption">Gemeindeausflug Farm Hoffnung</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/gottesdienst_bismarckstr.png"><div class="caption">Gottesdienst im Saal in der Bismarckstr. 54</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/gunter_jutta_hochzeit.png"><div class="caption">gunter jutta hochzeit</div></div>
   <div class="slide decade-slide" data-decade="1991-2000"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1991-2000</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/chor.jpg"><div class="caption">Chor der Stadtmission: Ina Thomass, Lindi Kirsten, Karin Seiler, Roswitha Hosthemke, Birgit von Ludwiger, Helmuth Weinert, Heiko von Ludwiger, Helmut Basson</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/Elke_Mannschatz_GertBotha_Hochzeit.jpg"><div class="caption">Hochzeit Gert Botha und Elke Mannschatz. 2000</div></div>
@@ -244,9 +260,9 @@
   <div class="slide"><img src="slideshow-photos/1991-2000/Bauausschuss.png"><div class="caption">Bauauschuss für die neue Stadtmission</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/image17.png"><div class="caption">Plan des neuen Gebäudes: West- und Südansicht</div></div>
   <div class="slide"><img src="slideshow-photos/1991-2000/image18.png"><div class="caption">Plan des ganzen Gebäudes</div></div>
-  <div class="slide"><img src="slideshow-photos/1991-2000/plus_minus_rechnung.png"><div class="caption">plus minus rechnung</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/plus_minus_rechnung.png"><div class="caption">Plus und Minus Rechnung</div></div>
   <div class="slide decade-slide" data-decade="2001-2010"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2001-2010</div></div>
-  <div class="slide"><img src="slideshow-photos/2001-2010/familie_klimke.jpg"><div class="caption">Familie Herbert Klimke: Anita, Werner und Sonja</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/familie_klimke.jpg"><div class="caption">Familie Herbert Klimke: Werner, Anita, Sonja und Herbert</div></div>
   <div class="slide"><img src="slideshow-photos/2001-2010/jugend_gespraech.jpg"><div class="caption">Gespräch mit der Jugend</div></div>
   <div class="slide"><img src="slideshow-photos/2001-2010/jungscharlager.jpg"><div class="caption">Jungscharlager</div></div>
   <div class="slide"><img src="slideshow-photos/2001-2010/konfirmation_mit_johannes_und_siegfried_eherler_1_11_2002.jpg"><div class="caption">Konfirmation mit Johannes und Siegfried Eherler. 1.11.1998</div></div>
@@ -262,29 +278,45 @@
   <div class="slide"><img src="slideshow-photos/2011-2020/Der Saal mit den alten Stühlen.png"><div class="caption">Der Saal mit den alten Stühlen</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/walter_kirsten.png"><div class="caption">Walter Kirsten</div></div>
   <div class="slide decade-slide" data-decade="2021-2026"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2021-2026</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/01_andreas.jpg"><div class="caption">Ordinierung Andreas und Steffi vom Ende, Januar 2025</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/02_andreas_steffi.jpg"><div class="caption">Ordinierung Andreas und Steffi vom Ende, Januar 2025</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/03a_ordinierung_andreas_steffi.jpg"><div class="caption">Ordinierung Andreas und Steffi vom Ende, Januar 2025</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/03_ordinierung_andreas.jpg"><div class="caption">Ordinierung Andreas und Steffi vom Ende, Januar 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Bekanntgabe von Familie Bandmann_LogosHope.jpg"><div class="caption">Bekanntgabe von Familie Bandmann, dass sie wieder auf das Missionsschiff „Logos Hope“ gehen</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_BU_ler_2025.jpg"><div class="caption">Unsere BUler bei der Vorstellung im Februar 2025 und bei der Einsegnung / Konfirmation am 19. April 2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Einführung_vom_Ende_26_Jan_ 2025.jpg"><div class="caption">Einführung_vom_Andreas und Steffi vom Ende am 26. Januar 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Evangelisation mit Elke_Roland Werner_ Februar 2026 .jpg"><div class="caption">Evangelisation mit Elke_und Roland Werner im Februar 2026 </div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Farmgottesdienst im September 2025.jpg"><div class="caption">Farmgottesdienst im September 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_frauenfreizeit_2025.jpg"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_gemeinsames_mittagessen.jpg"><div class="caption">Gemeinsames Mittagessen</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Gottesdienst im April 2025.jpg"><div class="caption">Farmgottesdienst im April 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Kreativissimus 2025.jpg"><div class="caption">01 Kreativissimus 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Krimidinner_Sept_2025.jpg"><div class="caption">Krimidinner im September 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_Adventsfeier der Senioren im Dezember 2025.jpg"><div class="caption">Adventsfeier der Senioren im Dezember 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_BU_ler_2025.jpg"><div class="caption">FrauGUnsere BUler bei der Vorstellung im Februar 2025 und bei der Einsegnung/ Konfirmation am 19. April 2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_Einführung_vom_Ende_26_Jan_ 2025.jpg"><div class="caption">Einführung_vom_Andreas und Steffi vom Ende am 26. Januar 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_Evangelisation mit Elke_Roland Werner_ Februar 2026 .jpg"><div class="caption">Evangelisation mit Elke_und Roland Werner im Februar 2026 </div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_frauenfreizeit_2025.jpg"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_Gottesdienst im April 2025.jpg"><div class="caption">FrauGUnsere BUler bei der Vorstellung im Februar 2025 und bei der Einsegnung/ Konfirmation am 19. April 2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_Kreativissimus 2025.jpg"><div class="caption">Kreativissimus 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/03_Adventsfeier der Senioren im Dezember 2025.jpg"><div class="caption">Adventsfeier der Senioren im Dezember 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/03_Einführung_vom_Ende_26_Jan_ 2025.jpg"><div class="caption">Einführung_vom_Andreas und Steffi vom Ende am 26. Januar 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/03_Evangelisation mit Elke_Roland Werner_ Februar 2026 .jpg"><div class="caption">03 Evangelisation mit Elke Roland Werner  Februar 2026 </div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/03_frauenfreizeit_2025.jpg"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/04_Adventsfeier der Senioren im Dezember 2025.jpg"><div class="caption">Adventsfeier der Senioren im Dezember 2025</div></div>
   <div class="slide"><img src="slideshow-photos/2021-2026/04_biblischer_unterricht_2023.jpg"><div class="caption">Biblischer Unterricht 2023</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/04_Einführung_vom_Ende_26_Jan_ 2025.jpg"><div class="caption">Einführung_vom_Andreas und Steffi vom Ende am 26. Januar 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/04_Evangelisation mit Elke_Roland Werner_ Februar 2026 .jpg"><div class="caption">Evangelisation mit Elke_und Roland Werner im Februar 2026 </div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/04_frauenfreizeit_2025.jpg"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
   <div class="slide"><img src="slideshow-photos/2021-2026/05_biblischer_unterricht_abschluss_2026.jpg"><div class="caption">Biblischer Unterricht Abschluss März 2026</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/06_evangelisation_beate_mann.jpg"><div class="caption">06 evangelisation beate mann</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/07_evangelisation_2026.jpg"><div class="caption">07 evangelisation 2026</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/bandmann_verabschiedung2.jpg"><div class="caption">bandmann verabschiedung2</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/bandmann_verabschiedung.jpg"><div class="caption">bandmann verabschiedung</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/bernhardt.jpg"><div class="caption">Andreas und Claudia Bernhardt: Stadtmissionsehepaar 2019-2022</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/Einschulungsgottesdienst 14 Jan 2024.jpg"><div class="caption">Einschulungsgottesdienst 14. Jan 2024</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/frauenfreizeit_2025_essen.jpg"><div class="caption">frauenfreizeit 2025 essen</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/frauenfreizeit_2025_gruppe.jpg"><div class="caption">frauenfreizeit 2025 gruppe</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/gemeinsames_mittagessen.jpg"><div class="caption">gemeinsames mittagessen</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/gottesdienst.jpg"><div class="caption">gottesdienst</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/kinderlied.jpg"><div class="caption">kinderlied</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/05_Einführung_vom_Ende_26_Jan_ 2025.jpg"><div class="caption">Einführung_vom_Andreas und Steffi vom Ende am 26. Januar 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/05_Evangelisation mit Elke_Roland Werner_ Februar 2026 .jpg"><div class="caption">Evangelisation mit Elke_und Roland Werner im Februar 2026 </div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/06_Einführung_vom_Ende_26_Jan_ 2025.jpg"><div class="caption">Einführung_vom_Andreas und Steffi vom Ende am 26. Januar 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/07_Einführung_vom_Ende_26_Jan_ 2025.jpg"><div class="caption">07 Einführung vom Ende 26 Jan  2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/bernhardt.jpg"><div class="caption">Andreas Berhhardt</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/Einschulungsgottesdienst 14 Jan 2024.jpg"><div class="caption">Einschulungsgottesdienst 14 Jan 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/ESSA-Pastorenkonferenz und Kennenlernen im Mai 2025.jpg"><div class="caption">ESSA-Pastorenkonferenz und Kennenlernen im Mai 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/gottesdienst.jpg"><div class="caption">Gottesdienst in der Stadtmission</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/kinderlied.jpg"><div class="caption">Die Kinder singen ein Lied vor der Predigt</div></div>
   <div class="slide"><img src="slideshow-photos/2021-2026/musikteam_zirzow.jpg"><div class="caption">Musikteam: Heide Zirzo und ??</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/neuer_eingang_2022.jpg"><div class="caption">Neuer Eingang der Stadtmission</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/osterfruehstueck.jpg"><div class="caption">Osterfrühstück 2025</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/seniorenkreis.jpg"><div class="caption">seniorenkreis</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/seniorenkreis_weihnachten.jpg"><div class="caption">seniorenkreis weihnachten</div></div>
-  <div class="slide"><img src="slideshow-photos/2021-2026/sinode_2023.jpg"><div class="caption">sinode 2023</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/neuer_eingang_2022.jpg"><div class="caption">Neuer_Eingang der Stadtmission im Jahre 2022</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/osterfruehstueck_2024.jpg"><div class="caption">Osterfrühstück 2024</div></div>
 <script>
   const slides = Array.from(document.querySelectorAll('.slide'));
   let current = 0;
