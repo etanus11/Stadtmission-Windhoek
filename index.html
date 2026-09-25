@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   body { 
     margin: 0; 
@@ -159,7 +160,7 @@
     transition: opacity 0.4s ease, visibility 0.4s ease;
   }
 
-  /* Shows when hovering top-left area OR when active via keyboard key 'D' */
+  /* Shows when hovering top-left area OR when active via keyboard key 'D' / click */
   .decade-container:hover .decade-nav,
   .decade-nav.visible {
     opacity: 1;
@@ -184,11 +185,61 @@
     color: #111;
     transform: scale(1.05);
   }
+
+  /* Mobile responsiveness adjustments */
+  @media (max-width: 768px) {
+    .decade-container {
+      width: 100%;
+      top: 10px;
+      left: 0;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    .decade-nav {
+      opacity: 1;
+      visibility: visible;
+      justify-content: center;
+    }
+
+    .decade-tab {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+    }
+
+    .decade-title { 
+      font-size: 2rem; 
+    }
+
+    .decade-years { 
+      font-size: 1.5rem; 
+    }
+
+    .caption {
+      font-size: 1.1rem;
+      padding: 6px 12px;
+    }
+
+    .nav-btn {
+      font-size: 1.8rem;
+      padding: 6px 12px;
+    }
+
+    .nav-btn.prev { left: 10px; }
+    .nav-btn.next { right: 10px; }
+
+    .music-btn {
+      top: 10px;
+      right: 10px;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- Decade Hover Container -->
+<!-- Decade Hover/Touch Container -->
 <div class="decade-container">
   <div class="decade-nav" id="decadeNav"></div>
 </div>
@@ -204,7 +255,7 @@
 <button class="nav-btn next" id="nextBtn" title="Next Slide">&#10095;</button>
 
   <div class="slide decade-slide active" data-decade="1976-1980"><img src="logo.png" class="title-logo" alt="Logo"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1976-1980</div><img src="title-photo.jpg" class="title-hero-img" alt="Titelbild"></div>
-  <div class="slide"><img src="slideshow-photos/1976-1980/01_Stami_Wdh_Bi-str_54.jpg"><div class="caption">Stami Wdh Bi-str 54</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/01_Stami_Wdh_Bi-str_54.jpg"><div class="caption">Stadtmission in der Bismarckstrasse 54</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/02_Stami_Wdh_Bimarckstr54.jpg"><div class="caption">Stadtmission Windhoek in der Bismarckstr. 54</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/03_Fam_Hechler_im_Garten.jpg"><div class="caption">Familie Peter Hechler im Garten</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/04_Stami-Programm.jpg"><div class="caption">Programm der Stadtmission auf dem Schaukasten</div></div>
@@ -213,9 +264,9 @@
   <div class="slide"><img src="slideshow-photos/1976-1980/11_Stamihof_Braai.jpg"><div class="caption">Ein Braai auf dem Stadtmissionshof in der  Bismarckstr.</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/12_Stamibraai.jpg"><div class="caption">Ein Braai auf dem Stadtmissionshof in der  Bismarckstr.</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/13_stamihof_Braai.jpg"><div class="caption">13 stamihof Braai</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/beate_hill.jpg"><div class="caption">Beate Hill - sie und ihr Mann gründeten den Hauskreis im Jahr 1973</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/peter_edith_bismarckstr_haus.jpg"><div class="caption">Peter und Edith Hechler: in der Bismarckstr. 54 ist unser erstes zu Hause</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/05_Garten_Kinderschar_1977.png"><div class="caption">Die Kinderschar im Garten. 1977</div></div>
-  <div class="slide"><img src="slideshow-photos/1976-1980/beate_hill.png"><div class="caption">Beate Hill - sie und ihr Mann gründeten den Hauskreis im Jahr 1973</div></div>
   <div class="slide"><img src="slideshow-photos/1976-1980/hechler_famiie_bismarck.png"><div class="caption">Familie Peter Hechler vor dem Haus in der Bismarckstrasse</div></div>
   <div class="slide decade-slide" data-decade="1981-1990"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1981-1990</div></div>
   <div class="slide"><img src="slideshow-photos/1981-1990/06_Bibelstunde_1983.jpg"><div class="caption">Bibelstunde 1983</div></div>
@@ -321,6 +372,7 @@
   <div class="slide"><img src="slideshow-photos/2011-2020/40_jahre_stami_hannes_und_hanni.jpg"><div class="caption">jahre stami hannes und hanni</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/40_jahre_stami.jpg"><div class="caption">Logo für die 40-Jahre-Feier</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/40-JahrFeierChorpdf.jpg"><div class="caption">-JahrFeierChorpdf</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/adventsfeier.jpg"><div class="caption">adventsfeier</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/angeltour.jpg"><div class="caption">Angeltour</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/bernhardt.jpg"><div class="caption">bernhardt</div></div>
   <div class="slide"><img src="slideshow-photos/2011-2020/BU_abschluss_severin_eherler.jpg"><div class="caption">Abschluss des Biblischen Unterrichts mit Christian Sewerin und Siegfried Eherler</div></div>
@@ -440,12 +492,18 @@
       const btn = document.createElement('button');
       btn.className = 'decade-tab';
       btn.textContent = decadeName;
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
         showSlide(item.index);
         restartTimer();
       });
       decadeNav.appendChild(btn);
     }
+  });
+
+  // Toggle decade bar on touch/click for mobile compatibility
+  document.querySelector('.decade-container').addEventListener('click', function() {
+    decadeNav.classList.toggle('visible');
   });
 
   // Audio Toggle Logic
@@ -473,10 +531,7 @@
     restartTimer();
   });
 
-  // Keyboard Controls: 
-  // Left / Right = individual slides
-  // Ctrl + Left / Right = decade jump
-  // 'D' = toggle decade bar visibility
+  // Keyboard Controls
   document.addEventListener('keydown', function(event) {
     if (event.key === 'ArrowRight') {
       event.preventDefault();
