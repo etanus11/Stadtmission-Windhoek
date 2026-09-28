@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { 
+    margin: 0; 
+    background: #e8e1e1; 
+    color: #111; 
+    font-family: sans-serif; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    overflow: hidden; 
+  }
+
+  /* Base Slide Styling with Smooth Fade Transition */
+  .slide { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 3s ease-in-out, visibility 1s ease-in-out;
+  }
+
+  /* Active Slide becomes visible and fades in */
+  .slide.active { 
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Photo Slide Styling */
+  img { 
+    max-width: 90vw; 
+    max-height: 80vh; 
+    object-fit: contain; 
+    border: 3px solid #d4af37; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
+  }
+  .caption { 
+    margin-top: 15px; 
+    font-size: 1.8rem; 
+    color: #111; 
+    background: rgba(255, 255, 255, 0.85); 
+    padding: 10px 20px; 
+    border-radius: 6px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+  }
+  
+  /* Decade Title Slide Styling */
+  .decade-slide { 
+    background-color: #e8e1e1; 
+    color: #111; 
+  }
+  .decade-title { 
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 3.5rem; 
+    color: #111; 
+    font-weight: bold; 
+    letter-spacing: 3px; 
+    margin-bottom: 10px; 
+  }
+  .decade-years { 
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 2.5rem; 
+    color: #222; 
+  }
+
+  /* First Slide Specific Media Styling Renate*/
+  .title-logo {
+    max-height: 150px;
+    width: auto;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    margin-bottom: 15px;
+  }
+  .title-hero-img {
+    max-height: 45vh;
+    width: auto;
+    margin-top: 15px;
+  }
+
+  /* Navigation Arrow Buttons */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+    user-select: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .nav-btn:hover {
+    background: rgba(212, 175, 55, 0.9);
+    color: #111;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .nav-btn.prev { left: 25px; }
+  .nav-btn.next { right: 25px; }
+
+  /* Music Button Styling */
+  .music-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 100;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .music-btn:hover {
+    background: #d4af37;
+    color: #111;
+  }
+
+  /* Decade Shortcut Container (Hover area in top-left) */
+  .decade-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px 20px 20px 20px;
+    z-index: 110;
+  }
+
+  /* Hidden by default with smooth fade-in */
+  .decade-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  /* Shows when hovering top-left area OR when active via keyboard key 'D' / click */
+  .decade-container:hover .decade-nav,
+  .decade-nav.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .decade-tab {
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    border: 2px solid #d4af37;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+  }
+
+  .decade-tab:hover {
+    background: #d4af37;
+    color: #111;
+    transform: scale(1.05);
+  }
+
+  /* Mobile responsiveness adjustments */
+  @media (max-width: 768px) {
+    .decade-container {
+      width: 100%;
+      top: 10px;
+      left: 0;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    .decade-nav {
+      opacity: 1;
+      visibility: visible;
+      justify-content: center;
+    }
+
+    .decade-tab {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+    }
+
+    .decade-title { 
+      font-size: 2rem; 
+    }
+
+    .decade-years { 
+      font-size: 1.5rem; 
+    }
+
+    .caption {
+      font-size: 1.1rem;
+      padding: 6px 12px;
+    }
+
+    .nav-btn {
+      font-size: 1.8rem;
+      padding: 6px 12px;
+    }
+
+    .nav-btn.prev { left: 10px; }
+    .nav-btn.next { right: 10px; }
+
+    .music-btn {
+      top: 10px;
+      right: 10px;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Decade Hover/Touch Container -->
+<div class="decade-container">
+  <div class="decade-nav" id="decadeNav"></div>
+</div>
+
+<!-- Background Audio Player -->
+<audio id="bg-music" loop>
+  <source src="background.mp3" type="audio/mpeg">
+</audio>
+<button class="music-btn" id="musicBtn" title="Musik abspielen/pausieren">🎵 Musik: Aus</button>
+
+<!-- On-screen Navigation Arrows -->
+<button class="nav-btn prev" id="prevBtn" title="Previous Slide">&#10094;</button>
+<button class="nav-btn next" id="nextBtn" title="Next Slide">&#10095;</button>
+
+  <div class="slide decade-slide active" data-decade="1976-1980"><img src="logo.png" class="title-logo" alt="Logo"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1976-1980</div><img src="title-photo.png" class="title-hero-img" alt="Titelbild"></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/01_beate_hill.webp"><div class="caption">Beate Hill - sie und ihr Mann gründeten den Hauskreis im Jahr 1973</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/02_hechler_famiie_bismarck.webp"><div class="caption">Familie Peter Hechler vor dem Haus in der Bismarckstrasse</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/03_Fam_Hechler_im_Garten.webp"><div class="caption">Familie Peter Hechler im Garten</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/04_Stami-Programm.webp"><div class="caption">Programm der Stadtmission auf dem Schaukasten</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/05_Garten_Kinderschar_1977.webp"><div class="caption">Die Kinderschar im Garten. 1977</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/09 FischflussCany_Wanderung.webp"><div class="caption">Wanderung durch das Fischfluss Canyon</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/10_Stamihof_Braai.webp"><div class="caption">Ein Braai auf dem Stadtmissionshof in der  Bismarckstr.</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/11_Stamihof_Braai.webp"><div class="caption">Ein Braai auf dem Stadtmissionshof in der Bismarckstr.</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/12_Stamibraai.webp"><div class="caption">Ein Braai auf dem Stadtmissionshof in der  Bismarckstr.</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/13_stamihof_Braai.webp"><div class="caption">Ein Braai auf dem Stadtmissionshof in der  Bismarckstrasse 54</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/14_Stami_Wdh_Bi-str_54.webp"><div class="caption">Stadtmission in der Bismarckstrasse 54</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/15_Stami_Wdh_Bimarckstr54.webp"><div class="caption">Stadtmission Windhoek in der Bismarckstr. 54</div></div>
+  <div class="slide"><img src="slideshow-photos/1976-1980/16_peter_edith_bismarckstr_haus.webp"><div class="caption">Peter und Edith Hechler: in der Bismarckstr. 54 ist unser erstes zu Hause</div></div>
+  <div class="slide decade-slide" data-decade="1981-1990"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1981-1990</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/06_Bibelstunde_1983.webp"><div class="caption">Bibelstunde 1983</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/07_Bibelstunde.webp"><div class="caption">Bibelstunde</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/08_Bibelstunde.webp"><div class="caption">Bibelstunde</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/14_Gemeindeausflug_Farm_Hoffnung.webp"><div class="caption">Gemeindeausflug nach Farm Hoffnung, mit vielen guten Bekannten und Freunden</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/15_Gemeindeausflug_Farm_Hoffnung.webp"><div class="caption">Gemeindeausflug nach Farm Hoffnung, mit vielen guten Bekannten und Freunden</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/16_Gemeindeausflug_Farm_Hoffnung.webp"><div class="caption">Gemeindeausflug nach Farm Hoffnung mit vielen guten Bekannten und Freunden</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/17_Kinderstunde_ehemalige_Garage.webp"><div class="caption">Kinderstunde ehemalige Garage</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/18_Kinderstd_mit_Monika.webp"><div class="caption">Kinderstunde mit Monika Pietzsch</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/19_Jugenraum_1984.webp"><div class="caption">Der Jugendraum - 1984</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/20_Freitzeit_Naukluft.webp"><div class="caption">Freitzeit Naukluft</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/21b_Neubau_1984.webp"><div class="caption">Bilder vom Bau des Stadtmissionssaales im Jahr 1984</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/21_Neubau_1984.webp"><div class="caption">Bau des Saales in der Bismarckstrasse. 1984</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/22_Einweihung_Schlusselubergabe.webp"><div class="caption">Einweihung des Saales mit der Schlüsselübergabe an Hans-Dieter Redecker</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/23_Einweihung_GoDi.webp"><div class="caption">Bilder vom Bau des Stadtmissionssaales im Jahr 1984</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/24_Einweihung.webp"><div class="caption">Einweihung des neuen Stadtmissionssaales im Jahr 1984</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/25_Einweihung.webp"><div class="caption">Einweihung des Stadtmissionssaales im Jahr 1984</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/26_Einweihung.webp"><div class="caption">Einweihung des Stadtmissionssaales im Jahr 1984</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/27_Pietzsch_ Boost_Wdh.webp"><div class="caption">Familie Pietzsch und Boost im Gespräch</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/28_Gottesdienst_Gastprediger_Trauernicht.webp"><div class="caption">Gottesdienst: Gastprediger Pastor Trauernicht</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/29_GoDI_neuer_Saal_Monika.webp"><div class="caption">Gottesdienst im neuen Saal. Hinten Monika Pietzsch</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/30_Gottesdienst_bekannten_Gesichtern.webp"><div class="caption">Gottesdienst mit bekannten Gesichtern: Familie Helmuth Weinert und Kinder</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/32_Gesprach_GoDienst.webp"><div class="caption">Gespräche während des Gottesdienstes. Frauen Brandt, Schäffler, Staby und Dannert</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/33_Taufe_Gisi_Redecker_Friedenau-damm.webp"><div class="caption">Taufe von Gisi Redecker im Friedenau Damm</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/34_Gemeindebraai_bei_Beilers.webp"><div class="caption">Gemeindebraai bei Beilers auf ihrem Brakwater Plot</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/35_Gemeindebraai_bei_Beilers.webp"><div class="caption">Gemeindebraai bei Beilers auf ihrem Brakwater Plot</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/36_Gemeindebraai_bei_Beilers.webp"><div class="caption">Gemeindebraai bei Beilers auf ihrem Brakwater Plot</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/37_Mitgliederaufnahme.webp"><div class="caption">Mitgliederaufnahme. Einer der ersten war Ludwig Hester</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/38_Farm-Go-dienst_Helmeringhausen.webp"><div class="caption">Farmgottesdienst bei Familie Hester bei Helmeringhausen</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/39_Horst_Monika_Pietzsch.webp"><div class="caption">Horst und Monika Pietzsch:  Monika geb. Bienk war zuerst Gemeindehelferin (1979 bis 1982) und heiratete dann Co-Missionar/Prediger Horst Pietzsch (1982-1985) in Windhoek</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/bibelstudium.webp"><div class="caption">Bibelstudium im neuen Saal der Stadtmission</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/Gastprediger_alter_Saal.webp"><div class="caption">Gastprediger im Saal in der Bismarckstrasse</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/gottesdienst_bismarckstr.webp"><div class="caption">Gottesdienst im Saal in der Bismarckstr. 54</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/Hans_Dieter_Redecker.webp"><div class="caption">Hans-Dieter Redecker. Er spielte eine leitende Rolle am Anfang der Stadtmission</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/hochzeit_horst_und_monika_pietsch.webp"><div class="caption">Hochzeit Horst und Monika Pietzsch. Anwesend Erika Redecker, Johannes Trauernicht und Friedel Lisse</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/kinderchor_pietsch_hochzeit_12.3.1983.webp"><div class="caption">Kinderchor zur Hochzeit von Pietzsch am 12. März 1983</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/konfirmation_werner_olli.webp"><div class="caption">Konfirmation mit Horst PietzschL Oliver Horsthemke und Werner Morgenstern</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/peter_hechler_predigt.webp"><div class="caption">Peter Hechler predigt im Saal in der Bismarckstr</div></div>
+  <div class="slide"><img src="slideshow-photos/1981-1990/saal_bismarckstr_1984.webp"><div class="caption">Der neue Saal in der Bismarckstrasse</div></div>
+  <div class="slide decade-slide" data-decade="1991-2000"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">1991-2000</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/arbeit_am_saal.webp"><div class="caption">Die Arbeit am Saal schreitet voran</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/Bauanfang_Grundstuck_olympia.webp"><div class="caption">Bauanfang des neuen Gebäudes in der Esther Brand Straße, Olympia</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/Bauausschuss.webp"><div class="caption">Bauauschuss für die neue Stadtmission: Otfried Morgenstern, Erik Henrichsen, Helmut Cramer, Naki Pfeiffer, unbekannt, Jok Pfeiffer, Hannes Trauernicht</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/bauplaene.webp"><div class="caption">Beschreibung der Baupläne</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/Braai.webp"><div class="caption">Braai auf dem Rasen mit viel Spass!</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/bruederrat_1992.webp"><div class="caption">Der Brüderrat der Stadtmission 1992</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/chor_einweihung.webp"><div class="caption">Der Chor singt zur Einweihung des neuen Gebäudes am 18. November 1992</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/einweihung_28_nov_1992.webp"><div class="caption">Einweihung des jetztigen Saales am 18. November 1992</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/Elke_Mannschatz_GertBotha_Hochzeit.webp"><div class="caption">Hochzeit Elke Mannschatz und Gert Botha</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/erik-henrichsen.webp"><div class="caption">Erik Henrichsen. Vorher im Brüderrat der Stadtmission</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/familie_klimke.webp"><div class="caption">Familie Herbert Klimke: Werner, Anita, Sonja und Herbert</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/familie_trauernicht.webp"><div class="caption">Familie Trauernicht in den 1990er Jahren</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/frauenstunde_stadtmission_1997-98.webp"><div class="caption">Frauenstunde 1998/99: Christa Koziol, Erika Rothkegel, Nannette Göttling, Roswitha Horsthemke, Angelika Cramer, Lindi Kirsten, Kornelia Jendrissek</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/frauenstunde.webp"><div class="caption">Frauenstunde: Martha Hübner, Annegret Enengl, Lindi Kirsten, Angelika Cramer, Roswitha Horsthemke, Anita Klimke, Dorle Herzberg</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/gunter_jutta_hochzeit.webp"><div class="caption">Hochzeit Günter und Jutta Pfeiffer. August 1995</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/hans_dieter_redecker.webp"><div class="caption">Hans-Dieter Redecker</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/helmut_cramer.webp"><div class="caption">Helmut Cramer</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/herbert_klimke.webp"><div class="caption">Herbert Klimke und Jugendliche sehen ins Feuer</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/herbert_klinke.webp"><div class="caption">herbert klinke</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/image16.webp"><div class="caption">bauplaene.txt</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/image17.webp"><div class="caption">Bauplan des neuen Gebäudes: West- und Südansicht.  Architekt Walter Kühirt. 1200 pro Quadratmeter</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/image18.webp"><div class="caption">Plan des ganzen Gebäudes</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/juergen_menge.webp"><div class="caption">Jürgen Menge</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/kinderchor_einweihung.webp"><div class="caption">Kinderchor bei der Einweihung des Gebäudes in Olympia. 1992</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/klimke_anzeige.webp"><div class="caption">Traueranzeige für Herbert Klimke</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/kostenvoranschlag_kehrmann_1992.webp"><div class="caption">Kostenvoranschlag von Martin Kehrmann für den Bau der Stadtmission</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/leeres_grundstueck_Olympia.webp"><div class="caption">So sah das leere Grundstück in Olympia aus</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/musikteam_oktober_1994.webp"><div class="caption">Musikteam Oktober 1994</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/plus_minus_rechnung.webp"><div class="caption">Plus und Minus Rechnung</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/reiner_geiss.webp"><div class="caption">Rainer Geiss vom Missonswerk Chrischona</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/saalbau.webp"><div class="caption">Der Bau des Saales schreiet gut voran</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/stami_dachstuhl.webp"><div class="caption">Der Dachstuhl des Stadtmissionssaales</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/taufe_johannes.webp"><div class="caption">Johannes Trauernicht tauft ein Mitglied</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/volleyball_SA.webp"><div class="caption">Volleyball in Südafrika gegen die ESSA Gemeinden</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/volleybal.webp"><div class="caption">Volleyball macht fit!</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/walter_kirsten.webp"><div class="caption">Walter Kirsten</div></div>
+  <div class="slide"><img src="slideshow-photos/1991-2000/wohnhaus.webp"><div class="caption">Der Bau des Wohnhauses der Stadtmission. 1992</div></div>
+  <div class="slide decade-slide" data-decade="2001-2010"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2001-2010</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/chor.webp"><div class="caption">Der Chor singt für die Gemeinde</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/david_simon_eherler.webp"><div class="caption">David und Simon Eherler</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/familie_eherler.webp"><div class="caption">Siegfried, Ursula, Simon und David Eherler </div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/gemeinschaft.webp"><div class="caption">gemeinschaft</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/gitarre_carola_birgit_helmut.webp"><div class="caption">Carola von Seidlitz, Birgit von Ludwiger und Helmuth von Ludwiger freuen sich am Gitarrenspel</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/hannes_und_hanni.webp"><div class="caption">Hannes und Hanni Treuernicht</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/hanni_erik_hannes.webp"><div class="caption">Hanni Trauernicht, Erik Henrichsen und Hannes Trauernicht</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/hauskreis_klein_windhoek.webp"><div class="caption">Hauskreis Klein Windhoek in den 2000er Jahten</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/hvonludwiger.webp"><div class="caption">Helmuth von Ludwiger</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/jugend_gespraech.webp"><div class="caption">jugend gespraech</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/jungscharlager.webp"><div class="caption">Die Jugend geht gern auf ein Jungscharlager</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/kinder_freizeit.webp"><div class="caption">Freizeit für die Kinder</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/konfirmation_mit_johannes_und_siegfried_eherler_1_11_2002.webp"><div class="caption">Konfirmation mit Johannes und Siegfried Eherler am 1. Nobember 2002</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/konfirmation.webp"><div class="caption">Konfirmation: Sind die weissen Kleider nicht schön?</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/krippenspiel.webp"><div class="caption">Krippenspiel der Kinder zum Weihnachtsfest</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/mittagessen_saal.webp"><div class="caption">Gemeinsames Mittagessen im Saal</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/monika.webp"><div class="caption">Ehepaare von Scheliha und Mannschatz im Gespräch</div></div>
+  <div class="slide"><img src="slideshow-photos/2001-2010/wurst_braai.webp"><div class="caption">Braten einer Wurst in einem Teig auf einem Stock über dem Feuer</div></div>
+  <div class="slide decade-slide" data-decade="2011-2020"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2011-2020</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/01_neuer_eingang_2022.webp"><div class="caption">Neuer Eingang im Jahr 2022</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/40_jahre_stami_hannes_und_hanni.webp"><div class="caption">Hannes und Hanni bei der Vierzig-Jahre Feier. 2016</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/40_jahre_stami.webp"><div class="caption">Logo für die 40-Jahre-Feier</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/40-JahrFeierChor.webp"><div class="caption">Der Chor zur 40-Jahr-Feier</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/adventsfeier.webp"><div class="caption">Adventsfeiern wurden für eine lange Zeit im SKW gefeiert. Mit einem Krippenspiel und Keksen</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/angeltour.webp"><div class="caption">Angeltour</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/beautiful_kids.webp"><div class="caption">Freude bei "Beautiful Kids" über die Geschenke</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/bernhardt.webp"><div class="caption">Andreas und Claudia Bernhardt</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/BU_abschluss_severin_eherler.webp"><div class="caption">Abschluss des Biblischen Unterrichts mit Christian Sewerin und Siegfried Eherler</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/Der Saal mit den alten Stühlen.webp"><div class="caption">Der Saal mit den alten braunen Stühlen</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/familie_bernhardt.webp"><div class="caption">Andreas und Claudia Bernhardt kamen 2019 als Stadtmissionsehepaar nach Windhoek</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/familie_severin.webp"><div class="caption">Familie Christian Severin</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/frauen_auf_Bank.webp"><div class="caption">Frauen treffen sich auf der Bank</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/frauen_essen.webp"><div class="caption">Die Frauen sind fröhlich und geniessen das Essen</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/ gemeinsames_mittagessen_2017.webp"><div class="caption">Gemeinsames Mittagessen 2017</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/gemeinsames_singen.webp"><div class="caption">Die Frauen singen zusammen. Dieses Treffen fand zwei Mal im Jahr statt</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/Johanna_Schwarz_Ordinierung_Februar_2016.webp"><div class="caption">Johanna Schwarz: Ordinierung als Gemeindehelferin im Februar 2016</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/konfirmation_sewerin.webp"><div class="caption">Konfirmation mit Christian Severin und Siegfried Eherler</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/michael.webp"><div class="caption">Stadtmissionar Michael Rust. 2010</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/rudi_penzhorn_mai_2018.webp"><div class="caption">Rudi Penzhorn im Mai 2018</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/rudi_penzhorn_ordinierung_mit_wieland_muller_februar_2017.webp"><div class="caption">Rudi Penzhorns Ordinierung mit Wieland Müller im Februar 2017</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/saal_gesamtblick_teppich.webp"><div class="caption">Der neue Saal mit dem Karakulteppich vom Gleichnis vom vierfachen Ackerfeld</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/schon_geschmuckter_saal_2016.webp"><div class="caption">Schön geschmuckter Saal im Jahre 2016</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/spass.webp"><div class="caption">Ein Wettbewerb unter den Männern</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/stami_terasse.webp"><div class="caption">Der alte Eingang. Im Winter konnte man sich an das Gitter lehnen und die Sonne geniessen</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/taufe_mit_sewerin.webp"><div class="caption">Christian Severin tauft ein Mitglied</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/wasserreservoir_malen.webp"><div class="caption">Das Wasserreservoir an der Ecke der Frankie Fredericksstrasse wird bemalt um die hässlichen Bilder unsichtbar zu machen</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/weihnachtsfeier_skw_2.webp"><div class="caption">Weihnachtsfeier der Stadtmission im Saal des SKW</div></div>
+  <div class="slide"><img src="slideshow-photos/2011-2020/weihnachtsfeier_skw.webp"><div class="caption">Weihnachtsfeier der Stadtmission im Saal des SKW</div></div>
+  <div class="slide decade-slide" data-decade="2021-2026"><div class="decade-title">50 Jahre Stadtmission Windhoek</div><div class="decade-years">2021-2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/001_Einführung_vom_Ende_26_Jan_2025.webp"><div class="caption">Einführung von Andreas und Steffi vom Ende am 26. Januar 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/001_Evangelisation mit Elke_Roland Werner_ Februar 2026 .webp"><div class="caption">Evangelisation mit Elke und Roland Werner im Februar 2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/001_frauenfreizeit_2025.webp"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/002_Adventsfeier der Senioren im Dezember 2025.webp"><div class="caption">Adventsfeier der Senioren im Dezember 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/002_Einführung_vom_Ende_26_Jan_2025.webp"><div class="caption">Einführung von Andreas und Steffi vom Ende am 26. Januar 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/005_Evangelisation mit Elke_Roland Werner_ Februar 2026 .webp"><div class="caption">Evangelisation mit Elke und Roland Werner im  Februar 2026 </div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/006_Einführung_vom_Ende_26_Jan_ 2025.webp"><div class="caption">Einführung von Andreas und Steffi vom Ende am 26. Januar 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Bekanntgabe von Familie Bandmann_LogosHope.webp"><div class="caption">Bekanntgabe von Familie Bandmann, dass sie wieder auf das Missionsschiff „Logos Hope“ gehen</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_BU_ler_2025.webp"><div class="caption">Abschluss des Biblischen Unterrichts im April 2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Farmgottesdienst im September 2025.webp"><div class="caption">Farmgottesdienst im September 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_gemeinsames_mittagessen.webp"><div class="caption">Gemeinsames Mittagessen auf der Terasse</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Gottesdienst im April 2025.webp"><div class="caption">Gottesdienst im April 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Kreativissimus 2025.webp"><div class="caption">Kreativissimus 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/01_Krimidinner_Sept_2025.webp"><div class="caption">Krimidinner September 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_BU_ler_2025.webp"><div class="caption">Unsere BUler bei der Vorstellung im Februar 2025 und bei der Einsegnung / Konfirmation am 19. April 2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_Evangelisation mit Elke_Roland Werner_Februar 2026.webp"><div class="caption">Evangelisation mit Elke und Roland Werner im  Februar 2026 </div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_frauenfreizeit_2025.webp"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/02_Kreativissimus 2025.webp"><div class="caption">Kreativissimus 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/03_Adventsfeier der Senioren im Dezember 2025.webp"><div class="caption">Adventsfeier der Senioren im Dezember 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/03_Einschulungsgottesdienst 14 Jan 2024.webp"><div class="caption">Einschulungsgottesdienst am 14. Jan 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/03_frauenfreizeit_2025.webp"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/04_Adventsfeier der Senioren im Dezember 2025.webp"><div class="caption">Adventsfeier der Senioren im Dezember 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/04_biblischer_unterricht_2023.webp"><div class="caption">Biblischer Unterricht im Jahr 2023</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/04_frauenfreizeit_2025.webp"><div class="caption">Frauenfreizeit auf der Rock Lodge im August 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/05_biblischer_unterricht_abschluss_2026.webp"><div class="caption">Abschluss des biblischen Unterrichts am 19. April 2026</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/andi_christa_helgard.webp"><div class="caption">Andreas Bernhardt, Christa Koziol und Helgard Huber</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/bernhardt.webp"><div class="caption">Andreas und Claudia Bernhardt, Stadtmissionsehepaar 2019-2022</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/claudia_weihnachtsfeier_pakete_2022.webp"><div class="caption">Claudia Bernhardt sortiert die Pakete für die Weihnachtsfeier. 2022</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/Einschulungsgottesdienst 14 Jan 2024.webp"><div class="caption">Einschulungsgottesdienst 14. Januar 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/ESSA-Pastorenkonferenz und Kennenlernen im Mai 2025.webp"><div class="caption">ESSA-Pastorenkonferenz und Kennenlernen im Mai 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/floetenspiel_gottesdienst.webp"><div class="caption">Flötenspiel im Gottesdienst. 2022</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/freunde_claudia.webp"><div class="caption">Claudia Bernhardt mit Freundin Debora</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/gottesdienst.webp"><div class="caption">Gottesdienst in der Stadtmission</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/jugendgruppe.webp"><div class="caption">Die Jugend chillt im Elternzimmer auf den gemütlichen Sesseln</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/kinderlied.webp"><div class="caption">Die Kinder singen ein Lied vor der Predigt</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/Krimidinner_Sept_2025.webp"><div class="caption">Krimidinner im September 2025</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/maennerfreizeit_august_2026.webp"><div class="caption">Männerfreizeit August 2026 beim Oanub Damm</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/maennerfreizeit_oanub_2026.webp"><div class="caption">Männerfreizeit August 2026 beim Oanub Damm</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/musikteam_zirzow.webp"><div class="caption">Musikteam: Heide Zirzow und Freundin Sabine Koep</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/osterfruehstueck_2024.webp"><div class="caption">Gemeinsames Osterfrühstück im April 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/rudi_penzhorn_abschied_quiz.webp"><div class="caption">Abschied von Rudi Penzhorn im Juni 2023?</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/rudi_penzhorn_verlobte.webp"><div class="caption">Rudi Penzhorn mit seiner Verlobten. Sie wohnen jetzt in der Schweiz</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/schulaenfanger_gottesdienst.webp"><div class="caption">Schulanfängergottesdienst Januar 2024</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/schulanfaenger.webp"><div class="caption">Freudige Kindergesichter in der ersten Reihe</div></div>
+  <div class="slide"><img src="slideshow-photos/2021-2026/tj17.webp"><div class="caption">Jugendliche treffen sich am Freitag Abend</div></div>
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  let timer;
+
+  function showSlide(index) {
+    if (!slides.length) return;
+    slides[current].classList.remove('active');
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add('active');
+  }
+
+  function nextSlide() { showSlide(current + 1); }
+  function previousSlide() { showSlide(current - 1); }
+
+  function decadeSlides() {
+    return slides.map((slide, index) => ({slide, index}))
+      .filter(item => item.slide.classList.contains('decade-slide'));
+  }
+
+  function nextDecade() {
+    const decades = decadeSlides();
+    const next = decades.find(item => item.index > current);
+    showSlide(next ? next.index : decades[0].index);
+  }
+
+  function previousDecade() {
+    const decades = decadeSlides();
+    const previous = decades.filter(item => item.index < current).pop();
+    showSlide(previous ? previous.index : decades[decades.length - 1].index);
+  }
+
+  function restartTimer() {
+    clearInterval(timer);
+    timer = setInterval(nextSlide, 8000);
+  }
+
+  // Generate Decade Shortcut Navigation Bar Buttons dynamically
+  const decadeNav = document.getElementById('decadeNav');
+  decadeSlides().forEach(item => {
+    const decadeName = item.slide.getAttribute('data-decade');
+    if (decadeName) {
+      const btn = document.createElement('button');
+      btn.className = 'decade-tab';
+      btn.textContent = decadeName;
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        showSlide(item.index);
+        restartTimer();
+      });
+      decadeNav.appendChild(btn);
+    }
+  });
+
+  // Toggle decade bar on touch/click for mobile compatibility
+  document.querySelector('.decade-container').addEventListener('click', function() {
+    decadeNav.classList.toggle('visible');
+  });
+
+  // Audio Toggle Logic
+  const audio = document.getElementById('bg-music');
+  const musicBtn = document.getElementById('musicBtn');
+
+  musicBtn.addEventListener('click', function() {
+    if (audio.paused) {
+      audio.play();
+      musicBtn.textContent = '🎵 Musik: An';
+    } else {
+      audio.pause();
+      musicBtn.textContent = '🎵 Musik: Aus';
+    }
+  });
+
+  // On-screen Button Event Listeners
+  document.getElementById('prevBtn').addEventListener('click', function() {
+    previousSlide();
+    restartTimer();
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', function() {
+    nextSlide();
+    restartTimer();
+  });
+
+  // Keyboard Controls
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      event.ctrlKey ? nextDecade() : nextSlide();
+      restartTimer();
+    }
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      event.ctrlKey ? previousDecade() : previousSlide();
+      restartTimer();
+    }
+    if (event.key === 'd' || event.key === 'D') {
+      decadeNav.classList.toggle('visible');
+    }
+  });
+
+  restartTimer();
+</script>
+</body>
+</html>
